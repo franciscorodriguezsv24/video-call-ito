@@ -1,0 +1,12 @@
+.sign-in-page{
+    height: 100vh;
+}
+
+.input-design{
+    height: 40px;
+}
+
+.input-design:focus{
+    outline: 1px solid green;
+    box-shadow: 0 0 10px green;
+}
