@@ -2,24 +2,12 @@ import React, { useState } from 'react'
 import "./SignIn.css"
 import UserImg from "../../../public/user-img.png"
 //import firebase component
-import {getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
 import auth from '../../credentials'
 import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const navigate = useNavigate();
-    
-    // const [user, setUser] = useState(null) 
-
-    // onAuthStateChanged(auth, (userFirebase) => {
-    //     if (userFirebase){
-    //         setUser(userFirebase)
-    //     }
-    //     else 
-    //     {
-    //         setUser(null)
-    //     }
-    // })
 
     const [register, setRegister] = useState(false)
 

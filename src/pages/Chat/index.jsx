@@ -1,8 +1,17 @@
 import React from 'react'
+import "./Chat.css"
+import { SideBar } from '../../components/SideBar'
 
 const Chat = () => {
   return (
-    <div>Chat</div>
+    <div className='row chat'>
+    <div className='col-1'>
+      <SideBar/>
+    </div>
+    <div className='col-11 bg-info'>
+    Chat
+    </div>
+  </div>
   )
 }
 

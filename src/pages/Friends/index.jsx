@@ -1,18 +1,18 @@
 import React from 'react'
+import "./Friends.css"
 import { SideBar } from '../../components/SideBar'
-import './VideoCall.css'
 
-const VideoCall = () => {
+const Friends = () => {
   return (
-    <div className='row videoCall'>
+    <div className='row chat'>
     <div className='col-1'>
       <SideBar/>
     </div>
     <div className='col-11 bg-info'>
-    Video Call
+    Friends
     </div>
   </div>
   )
 }
 
-export default VideoCall
+export default Friends

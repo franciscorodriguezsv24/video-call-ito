@@ -1,11 +1,16 @@
 import React from 'react'
-import auth from '../../credentials'
-import { signOut } from 'firebase/auth'
+import './Home.css'
+import { SideBar } from '../../components/SideBar'
 
 const Home = () => {
   return (
-    <div>Home
-    <button className='btn btn-danger' onClick={()=>signOut(auth)}>logout</button>    
+    <div className='row home'>
+      <div className='col-1'>
+        <SideBar/>
+      </div>
+      <div className='col-11 bg-info'>
+      home
+      </div>
     </div>
   )
 }

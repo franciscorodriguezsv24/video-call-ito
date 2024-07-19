@@ -5,6 +5,7 @@ import SignIn from '../../pages/SignIn'
 import Home from '../../pages/Home'
 import Chat from '../../pages/Chat'
 import Call from '../../pages/Call'
+import Friends from '../../pages/Friends'
 
 const AuthenticatedRoutes = () => {
 
@@ -16,6 +17,8 @@ const AuthenticatedRoutes = () => {
         { path: '/sign-in', element: <SignIn /> },
         { path: '/', element: currentUser ? <Home /> : <Navigate to="/sign-in" /> },
         { path: '/chat', element: currentUser ? <Chat /> : <Navigate to="/sign-in" /> },
+        { path: '/friends', element: currentUser ? <Friends /> : <Navigate to="/sign-in" /> },
+
     ]);
 };
 
