@@ -5,6 +5,7 @@ import UserImg from "../../../public/user-img.png"
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
 import {auth} from '../../credentials'
 import { useNavigate } from 'react-router-dom';
+import { BiWorld } from "react-icons/bi";
 
 const SignIn = () => {
     const navigate = useNavigate();
@@ -47,8 +48,16 @@ const SignIn = () => {
                         </div>
                     </div>
                 </div>
-                <div className='col-md-8 bg-info'>
-                h
+                <div className='col-md-8 sign-container'>
+                    <div className='h-100 d-flex flex-column justify-content-center align-items-center'>
+                        <h1 className='phrase-1 text-success'>This is the place</h1>
+                        <div className='d-flex flex-row align-items-center gap-3'>
+                            <p className='phrase-2 m-0 text-success'>Where you can</p>
+                            <p className='phrase-2dot5 m-0 text-success'>Connect</p>
+                        </div>
+                            <h1 className='phrase-3 m-0 text-success'>with</h1>
+                            <h1 className='phrase-4 text-success'>your own <BiWorld/></h1>
+                    </div>
                 </div>
             </div>
         </div>
