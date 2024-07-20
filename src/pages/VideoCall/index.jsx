@@ -2,19 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SideBar } from '../../components/SideBar';
 import './VideoCall.css';
 import { io } from 'socket.io-client';
-import Peer from 'simple-peer';
+import { CiUser } from 'react-icons/ci';
+import { MdOutlineCallEnd } from "react-icons/md";
 
 const VideoCall = () => {
-  const [yourId, setYourId] = useState('');
-  const [users, setUsers] = useState({});
   const [stream, setStream] = useState();
-  const [receivingCall, setReceivingCall] = useState(false);
-  const [caller, setCaller] = useState('');
-  const [callerSignal, setCallerSignal] = useState();
-  const [callAccepted, setCallAccepted] = useState(false);
+  const [cameraEnabled, setCameraEnabled] = useState(true);
+  const [called, setCalled] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const userVideo = useRef();
-  const partnerVideo = useRef();
   const socket = useRef();
 
   useEffect(() => {
@@ -42,85 +39,42 @@ const VideoCall = () => {
       setCaller(data.from);
       setCallerSignal(data.signal);
     });
+
+    setIsPopupVisible(true);
   }, []);
 
-  function callPeer(id) {
-    console.log('Calling peer:', id);
-    const peer = new Peer({
-      initiator: true,
-      trickle: false,
-      config: {
-        iceServers: [
-          {
-            urls: 'stun:numb.viagenie.ca',
-            username: 'sultan1640@gmail.com',
-            credential: '98376683',
-          },
-          {
-            urls: 'turn:numb.viagenie.ca',
-            username: 'sultan1640@gmail.com',
-            credential: '98376683',
-          },
-        ],
-      },
-      stream: stream,
-    });
 
-    peer.on('signal', (data) => {
-      socket.current.emit('callUser', { userToCall: id, signalData: data, from: yourId });
-    });
-
-    peer.on('stream', (stream) => {
-      if (partnerVideo.current) {
-        partnerVideo.current.srcObject = stream;
-      }
-    });
-
-    socket.current.on('callAccepted', (signal) => {
-      console.log('Call accepted');
-      setCallAccepted(true);
-      peer.signal(signal);
-    });
-  }
-
-  function acceptCall() {
-    console.log('Call accepted');
-    setCallAccepted(true);
-    const peer = new Peer({
-      initiator: false,
-      trickle: false,
-      stream: stream,
-    });
-
-    peer.on('signal', (data) => {
-      socket.current.emit('acceptCall', { signal: data, to: caller });
-    });
-
-    peer.on('stream', (stream) => {
-      partnerVideo.current.srcObject = stream;
-    });
-
-    peer.signal(callerSignal);
-  }
+  const toggleCamera = () => {
+    if (stream) {
+      const videoTrack = stream.getVideoTracks()[0];
+      videoTrack.enabled = !videoTrack.enabled;
+      setCameraEnabled(videoTrack.enabled);
+    }
+  };
 
   let UserVideo;
   if (stream) {
-    UserVideo = <video ref={userVideo} autoPlay muted className="col-4" />;
+    UserVideo =
+    <div className="w-50 border border-success rounded d-flex flex-column">
+      <video ref={userVideo} autoPlay muted/>
+      <button onClick={toggleCamera} className="btn btn-success text-light border rounded-bottom">
+        {cameraEnabled ? 'Turn Camera Off' : 'Turn Camera On'}
+      </button>
+    </div>;
   }
 
-  let PartnerVideo;
-  if (callAccepted) {
-    PartnerVideo = <video ref={partnerVideo} autoPlay className="col-4" />;
-  }
+  const handleAcceptCall = () => {
+    setIsPopupVisible(false);
+    setCalled(true)
+  };
 
-  let incomingCall;
-  if (receivingCall) {
-    incomingCall = (
-      <div>
-        <h1>{caller} is calling you</h1>
-        <button onClick={acceptCall}>Accept</button>
-      </div>
-    );
+  const handleRejectCall = () => {
+    setIsPopupVisible(false);
+    setCalled(false)
+  };
+
+  const handleFinishCall = () => {
+    setCalled(false);
   }
 
   return (
@@ -128,27 +82,32 @@ const VideoCall = () => {
       <div className="col-1">
         <SideBar />
       </div>
-      <div className="col-11 bg-info">
-        <div className="row">
+      <div className="col-11 video-container pt-5 text-center">
+        <div className="d-flex flex-row justify-content-center">
           {UserVideo}
-          {PartnerVideo}
+          <div className={called ? 'w-50  border border-success rounded d-flex flex-column align-items-center justify-content-center' : 'd-none'}>
+            <div className='call-icon border-5 border border-success rounded-circle d-flex flex-column align-items-center p-2'>
+              <CiUser className='text-success' size={350} />
+            </div>
+            <h1 className='text-success'>Camera off</h1>
+          </div>
         </div>
-        <div>
-          {Object.keys(users).map((key) => {
-            if (key === yourId) {
-              return null;
-            }
-            return (
-              <button key={key} onClick={() => callPeer(key)}>
-                Call {key}
-              </button>
-            );
-          })}
-        </div>
-        <div>{incomingCall}</div>
+
+        <a className='mt-5 btn btn-danger rounded-circle text-light' onClick={handleFinishCall}><MdOutlineCallEnd size={60}/></a>
+        {isPopupVisible && (
+          <div className='popup'>
+            <div className='popup-inner'>
+              <h2>Incoming Call</h2>
+              <p>John Doe is calling...</p>
+              <button className='btn btn-success' onClick={handleAcceptCall}>Accept</button>
+              <button className='btn btn-danger' onClick={handleRejectCall}>Reject</button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default VideoCall;
+

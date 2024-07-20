@@ -20,7 +20,6 @@ const Chat = () => {
           <a className='btn text-success'  href='/call'><MdAddIcCall size={45}/></a>
           <a className='btn text-success'  href='/video-call'><MdVideoCall size={45}/></a>
         </div>
-
       </div>
       <hr className='text-success w-50'/>
       <div className='w-50 border-end border-success d-block pe-2'>
