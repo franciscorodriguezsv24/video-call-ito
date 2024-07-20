@@ -11,7 +11,7 @@ export const SideBar = () => {
     const location = useLocation();
     const {currentUser} = useAuth();
 
-  return (
+return (
     <>
         <nav className="d-flex flex-column justify-content-between gap-3 h-100 ps-2 pb-3">
             <div className='text-success text-center'>
