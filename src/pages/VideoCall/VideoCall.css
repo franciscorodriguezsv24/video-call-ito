@@ -1,3 +1,7 @@
 .videoCall{
     height: 100vh;
 }
+
+.video-container{
+     background-color:  rgb(248, 242, 235);
+}
