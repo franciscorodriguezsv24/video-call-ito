@@ -9,7 +9,7 @@ import Friends from '../../pages/Friends'
 
 const AuthenticatedRoutes = () => {
 
-    const { currentUser} = useAuth();
+    const { currentUser } = useAuth();
 
     return useRoutes([
         { path: '/call', element: currentUser ? <Call /> : <Navigate to="/sign-in" /> },

@@ -1,8 +1,12 @@
 import React from 'react'
 import './Home.css'
 import { SideBar } from '../../components/SideBar'
+import { useAuth } from '../../context/Authentication'
 
 const Home = () => {
+  const {currentUser} = useAuth()
+
+  console.log(currentUser)
   return (
     <div className='row home'>
       <div className='col-1'>

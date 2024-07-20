@@ -3,7 +3,7 @@ import "./SignIn.css"
 import UserImg from "../../../public/user-img.png"
 //import firebase component
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
-import auth from '../../credentials'
+import {auth} from '../../credentials'
 import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
