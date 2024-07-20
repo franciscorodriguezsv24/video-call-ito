@@ -42,11 +42,11 @@ return (
                 
             </div>
             <div className='d-flex flex-column align-items-start w-100'>
-                <div className='w-100 d-flex flex-column align-items-center'>
+                <div className='w-100 d-flex flex-column align-items-center justify-content-center'>
                     <div className='border border-black rounded-circle d-flex flex-column align-items-center'>
                         <img src={UserImg} width={60} height={60}/>
                     </div>
-                    <div className='w-100 text-wrap m-0'>{currentUser.email}</div>
+                    <div className='w-100 text-wrap m-0 text-center'>{currentUser.email}</div>
                 </div>
     
                 <button className='btn btn d-flex flex-row text-danger align-items-center gap-2 fs-4' onClick={()=>signOut(auth)}>
