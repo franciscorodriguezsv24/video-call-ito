@@ -1,3 +1,15 @@
 .chat{
     height: 100vh;
 }
+
+.chat-content{
+    background-color: rgb(248, 242, 235);
+}
+
+.bg-color{
+    background-color: rgba(161, 161, 161, 0.523);
+}
+
+.chat-area{
+    height: 80vh;
+}
