@@ -15,11 +15,10 @@ export const UserFriend = ({nickname, status}) => {
         </div>
 
         <fieldset className='d-flex flex-row gap-2 justify-content-end w-100 pe-3' disabled={status !== "Available"}>
-              <a className='btn btn-success rounded-circle text-light'><MdVideoCall size={25}/></a>
-              <a className='btn btn-success rounded-circle text-light'><MdAddIcCall size={25}/></a>
-              <a className='btn btn-success rounded-circle text-light'><MdChat size={25}/></a>
+              <a href='video-call' className='btn btn-success rounded-circle text-light'><MdVideoCall size={25}/></a>
+              <a href='/call' className='btn btn-success rounded-circle text-light'><MdAddIcCall size={25}/></a>
+              <a href='/chat' className='btn btn-success rounded-circle text-light'><MdChat size={25}/></a>
         </fieldset>
-        
       </div>
     </div>
   )
