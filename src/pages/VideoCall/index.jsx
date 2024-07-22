@@ -1,71 +1,46 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SideBar } from '../../components/SideBar';
 import './VideoCall.css';
-import { io } from 'socket.io-client';
 import { CiUser } from 'react-icons/ci';
 import { MdOutlineCallEnd } from "react-icons/md";
 
 const VideoCall = () => {
   const [stream, setStream] = useState();
-  const [cameraEnabled, setCameraEnabled] = useState(true);
   const [called, setCalled] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [camera, setCamera] = useState(false)
 
-  const userVideo = useRef();
-  const socket = useRef();
 
   useEffect(() => {
-    socket.current = io.connect('/video-call');
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-      setStream(stream);
-      if (userVideo.current) {
-        userVideo.current.srcObject = stream;
-      }
-    });
-
-    socket.current.on('yourID', (id) => {
-      console.log('Your ID:', id);
-      setYourId(id);
-    });
-
-    socket.current.on('allUsers', (users) => {
-      console.log('All users:', users);
-      setUsers(users);
-    });
-
-    socket.current.on('hey', (data) => {
-      console.log('Receiving call from:', data.from);
-      setReceivingCall(true);
-      setCaller(data.from);
-      setCallerSignal(data.signal);
-    });
 
     setIsPopupVisible(true);
   }, []);
 
 
   const toggleCamera = () => {
-    if (stream) {
-      const videoTrack = stream.getVideoTracks()[0];
-      videoTrack.enabled = !videoTrack.enabled;
-      setCameraEnabled(videoTrack.enabled);
-    }
+    setCamera(!camera)
   };
 
   let UserVideo;
   if (stream) {
     UserVideo =
     <div className="w-50 border border-success rounded d-flex flex-column">
-      <video ref={userVideo} autoPlay muted/>
+      <div className='w-100  border border-success rounded d-flex flex-column align-items-center justify-content-center'>
+            <div className='call-icon border-5 border border-success rounded-circle d-flex flex-column align-items-center p-2'>
+              <CiUser className='text-success' size={350} />
+            </div>
+            <h1 className='text-success'>{camera ? "Camera On" : "Camera off"}</h1>
+          </div>
       <button onClick={toggleCamera} className="btn btn-success text-light border rounded-bottom">
-        {cameraEnabled ? 'Turn Camera Off' : 'Turn Camera On'}
+        {camera ? 'Turn Off' : 'Turn On'}
       </button>
     </div>;
   }
 
   const handleAcceptCall = () => {
     setIsPopupVisible(false);
-    setCalled(true)
+    setCalled(true);
+    setStream(true);
   };
 
   const handleRejectCall = () => {
@@ -93,7 +68,7 @@ const VideoCall = () => {
           </div>
         </div>
 
-        <a className='mt-5 btn btn-danger rounded-circle text-light' onClick={handleFinishCall}><MdOutlineCallEnd size={60}/></a>
+        <a className={stream ? 'mt-5 btn btn-danger rounded-circle text-light' : 'd-none'} onClick={handleFinishCall}><MdOutlineCallEnd size={60}/></a>
         {isPopupVisible && (
           <div className='popup'>
             <div className='popup-inner'>
