@@ -58,3 +58,11 @@ or
 ```bash
 yarn dev
 ```
+
+### Alert
+If you want to watch one of the future related with WebRTC in this case the use of video camera on the app please change the branch, you will access only in the local way. 
+
+```bash
+git checkout connect-us/webRTC
+```
+and you will be able to watch this in /video-call route
